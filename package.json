@@ -1,0 +1,23 @@
+{
+  "name": "bookshelf-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilham76c/bookshelf-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilham76c/bookshelf-api/issues"
+  },
+  "homepage": "https://github.com/ilham76c/bookshelf-api#readme",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.3"
+  }
+}
