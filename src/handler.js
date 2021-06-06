@@ -74,7 +74,7 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
-const getAllNotesHandler = () => ({
+const getAllBooksHandler = () => ({
   status: 'success',
   data: {
     notes,
@@ -159,7 +159,7 @@ const deleteNoteByIdHandler = (request, h) => {
 
 module.exports = {
   addBookHandler,
-  getAllNotesHandler,
+  getAllBooksHandler,
   getNoteByIdHandler,
   editNoteByIdHandler,
   deleteNoteByIdHandler,
