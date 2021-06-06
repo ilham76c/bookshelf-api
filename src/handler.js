@@ -74,12 +74,40 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books,
-  },
-});
+const getAllBooksHandler = (request, h) => {
+  const { name, reading, finished } = request.query;
+  
+  if (typeof reading !== 'undefined') {
+    // const book = books.filter((n) => n.reading === Boolean(parseInt(reading)));
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: books.filter((n) => n.reading === Boolean(parseInt(reading))),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  if (typeof finished !== 'undefined') {
+    // const book = books.filter((n) => n.finished === Boolean(parseInt(finished)));
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: books.filter((n) => n.finished === Boolean(parseInt(finished))),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  return {
+    status: 'success',
+    data: {
+      books,
+    },
+  }
+};
 
 const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
