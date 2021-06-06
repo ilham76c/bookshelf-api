@@ -1,5 +1,5 @@
 const { nanoid } = require('nanoid');
-const notes = require('./notes');
+const books = require('./books');
 
 const addBookHandler = (request, h) => {
   const {
@@ -32,9 +32,9 @@ const addBookHandler = (request, h) => {
     finished: pageCount === readPage
   };
 
-  notes.push(newNote);
-  console.log(notes);
-  const isSuccess = notes.filter((note) => note.id === id).length > 0;
+  books.push(newNote);
+  
+  const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   if (!name) {
     const response = h.response({
@@ -77,20 +77,20 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = () => ({
   status: 'success',
   data: {
-    notes,
+    books,
   },
 });
 
 const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
-  const note = notes.filter((n) => n.id === bookId)[0];
+  const book = books.filter((n) => n.id === bookId)[0];
 
-  if (note !== undefined) {
+  if (book !== undefined) {
     const response = h.response({
       status: 'success',
       data: {
-        note,
+        book,
       },
     });
     response.code(200);
@@ -139,11 +139,11 @@ const editBookByIdHandler = (request, h) => {
 
   const updatedAt = new Date().toISOString();
 
-  const index = notes.findIndex((note) => note.id === bookId);
+  const index = books.findIndex((book) => book.id === bookId);
 
   if (index !== -1) {
-    notes[index] = {
-      ...notes[index],
+    books[index] = {
+      ...books[index],
       name,
       year,
       author,
@@ -172,10 +172,10 @@ const editBookByIdHandler = (request, h) => {
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
-  const index = notes.findIndex((note) => note.id === bookId);
+  const index = books.findIndex((book) => book.id === bookId);
 
   if (index !== -1) {
-    notes.splice(index, 1);
+    books.splice(index, 1);
     const response = h.response({
       status: 'success',
       message: 'Buku berhasil dihapus',
