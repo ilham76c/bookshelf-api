@@ -29,11 +29,10 @@ const addBookHandler = (request, h) => {
     id,
     insertedAt,
     updatedAt,
-    finished: pageCount === readPage
+    finished: pageCount === readPage,
   };
 
   books.push(newNote);
-  
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   if (!name) {
@@ -76,13 +75,23 @@ const addBookHandler = (request, h) => {
 
 const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
-  
-  if (typeof reading !== 'undefined') {
-    // const book = books.filter((n) => n.reading === Boolean(parseInt(reading)));
+  if (typeof name !== 'undefined') {
+    const re = new RegExp(name.toLowerCase(), 'g');
     const response = h.response({
       status: 'success',
       data: {
-        books: books.filter((n) => n.reading === Boolean(parseInt(reading))),
+        books: books.filter((n) => re.test(n.name.toLowerCase())),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  if (typeof reading !== 'undefined') {
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: books.filter((n) => n.reading === Boolean(parseInt(reading, 10))),
       },
     });
     response.code(200);
@@ -90,11 +99,10 @@ const getAllBooksHandler = (request, h) => {
   }
 
   if (typeof finished !== 'undefined') {
-    // const book = books.filter((n) => n.finished === Boolean(parseInt(finished)));
     const response = h.response({
       status: 'success',
       data: {
-        books: books.filter((n) => n.finished === Boolean(parseInt(finished))),
+        books: books.filter((n) => n.finished === Boolean(parseInt(finished, 10))),
       },
     });
     response.code(200);
@@ -106,7 +114,7 @@ const getAllBooksHandler = (request, h) => {
     data: {
       books,
     },
-  }
+  };
 };
 
 const getBookByIdHandler = (request, h) => {
