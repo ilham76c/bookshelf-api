@@ -74,7 +74,7 @@ const addBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
-  const { name, reading, finished } = request.query;
+  let { name, reading, finished } = request.query;
   if (typeof name !== 'undefined') {
     const re = new RegExp(name.toLowerCase(), 'g');
     const response = h.response({
@@ -112,7 +112,10 @@ const getAllBooksHandler = (request, h) => {
   return {
     status: 'success',
     data: {
-      books,
+      books: books.map(book => { 
+        let { id, name, publisher } = book; 
+        return { id, name, publisher };
+      })
     },
   };
 };
