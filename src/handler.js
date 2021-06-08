@@ -32,7 +32,6 @@ const addBookHandler = (request, h) => {
     finished: pageCount === readPage,
   };
 
-  books.push(newNote);
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   if (!name) {
@@ -54,6 +53,7 @@ const addBookHandler = (request, h) => {
   }
 
   if (isSuccess) {
+    books.push(newNote);
     const response = h.response({
       status: 'success',
       message: 'Buku berhasil ditambahkan',
